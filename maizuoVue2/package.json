@@ -10,8 +10,14 @@
     "lint": "eslint --ext .js,.vue src"
   },
   "dependencies": {
+    "axios": "^0.15.3",
+    "css-loader": "^0.26.4",
+    "less": "^2.7.2",
+    "less-loader": "^4.0.2",
     "vue": "^2.2.2",
-    "vue-router": "^2.2.0"
+    "vue-awesome-swiper": "^2.3.8",
+    "vue-router": "^2.2.0",
+    "vuex": "^2.2.1"
   },
   "devDependencies": {
     "autoprefixer": "^6.7.2",
