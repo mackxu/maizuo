@@ -11,7 +11,7 @@ Vue.use(Vuex)
 
 Vue.$http = axios.create({
   baseURL: 'http://localhost:8080/v4/api',
-  timeout: 1000
+  timeout: 1500
 })
 
 const debug = process.env.NODE_ENV !== 'production'

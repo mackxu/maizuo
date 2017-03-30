@@ -2,10 +2,14 @@
 import Vue from 'vue'
 import * as Type from '../mutation-types'
 
-// actions
+// http utils
 const _get = ({ api, query }, commit) => {
+  let localData = getLocal(api)
+  if (localData) {
+    return Promise.resolve(localData)
+  }
   if (commit) {
-    commit('START_LOADING')
+    commit(Type.START_LOADING)
   }
 
   // 修正url
@@ -15,9 +19,24 @@ const _get = ({ api, query }, commit) => {
 
   return Vue.$http.get(api)
     .then(res => {
-      commit && commit('FINISH_LOADING')
-      return res.data
+      commit && commit(Type.FINISH_LOADING)
+      if (res.status === 0) {
+        getLocal(api) || setLocal(api, res.data)
+        return res.data
+      }
+      return Promise.reject(new Error('fetch ' + api + ' fail'))
     })
+}
+
+const getLocal = key => {
+  let res = JSON.parse(localStorage.getItem(key))
+  return res && res.data
+}
+const setLocal = (key, val) => {
+  localStorage.setItem(key, JSON.stringify({
+    date: +new Date(),
+    data: val
+  }))
 }
 
 // state
@@ -66,12 +85,7 @@ const actions = {
     let query = `page=${pageN}&count=${count}&t=${+new Date()}`
 
     return _get({ api, query }, commit)
-      .then(res => {
-        if (res.status === 0) {
-          return commit('FETCH_COMING_SOON_SUCCESS', res.data)
-        }
-        return Promise.reject(new Error('fetch coming soon films fail'))
-      })
+      .then(res => commit(Type.FETCH_COMING_SOON_SUCCESS, res))
   },
   /**
    * 获取正在上映的影片
@@ -85,12 +99,7 @@ const actions = {
     let query = `page=${pageN}&count=${count}&t=${+new Date()}`
 
     return _get({ api, query }, commit)
-      .then(res => {
-        if (res.status === 0) {
-          return commit('FETCH_NOW_PLAYING_SUCCESS', res.data)
-        }
-        return Promise.reject(new Error('fetch now playing films fail'))
-      })
+      .then(res => commit(Type.FETCH_NOW_PLAYING_SUCCESS, res))
   },
   /**
    * 根据film id获取电影详情
@@ -103,12 +112,7 @@ const actions = {
     let query = '_t=' + new Date().getTime()
 
     return _get({ api, query }, commit)
-      .then(res => {
-        if (res.status === 0) {
-          return commit('FETCH_DETAIL_SUCCESS', res.data)
-        }
-        return Promise.reject(new Error('fetch detail fail'))
-      })
+      .then(res => commit(Type.FETCH_DETAIL_SUCCESS, res))
   },
   /**
    * 获取广告位图
@@ -120,12 +124,7 @@ const actions = {
     let query = '_t=' + new Date().getTime()
 
     return _get({ api, query }, commit)
-      .then(res => {
-        if (res.status === 0) {
-          return commit('FETCH_BANNER_SUCCESS', res.data)
-        }
-        return Promise.reject(new Error('fetch billboards fail'))
-      })
+      .then(res => commit(Type.FETCH_BANNER_SUCCESS, res))
   }
 }
 

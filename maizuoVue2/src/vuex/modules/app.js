@@ -23,8 +23,15 @@ const mutations = {
   }
 }
 
+const actions = {
+  changeLeftNavState ({commit}, isShow) {
+    commit(Type.CHANGE_LEFTNAV_STATE, isShow)
+  }
+}
+
 export default {
   state,
   getters,
-  mutations
+  mutations,
+  actions
 }

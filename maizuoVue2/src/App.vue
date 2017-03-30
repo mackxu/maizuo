@@ -2,21 +2,39 @@
   @import "./assets/styles/icon.css";
   @import "./assets/styles/reset.css";
 
-  @color: #fff;
   body {
-    color: @color;
+    font-family: 'Microsoft YaHei', Tahoma, Helvetica, Arial, sans-serif;
+    background-color: #ebebeb;
+    font-size: 0.3rem;
+    padding-top: 1rem;
   }
 </style>
 
 <template>
-  <div id="app">
-    <img src="./assets/logo.png">
-    <router-view></router-view>
-  </div>
+  <main class="main">
+    <Navbar></Navbar>
+    <div class="app-view">
+      <router-view></router-view>
+    </div>
+    <Sidebar></Sidebar>
+    <div class="nprogress">
+    </div>
+  </main>
 </template>
 
 <script>
-export default {
-  name: 'app'
-}
+  import Navbar from './components/Navbar'
+  import Sidebar from './components/Sidebar'
+  export default {
+    name: 'app',
+    components: {
+      Navbar,
+      Sidebar
+    },
+    created () {
+      // 动态计算html的字体大小
+      let html = document.documentElement
+      html.style.fontSize = html.clientWidth / 6.4 + 'px'
+    }
+  }
 </script>
