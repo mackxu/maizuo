@@ -13,11 +13,13 @@ const _get = ({ api, query }, commit) => {
   }
 
   // 修正url
+  var url = api
   if (query) {
-    api += '?' + query
+    url += '?' + query
   }
 
-  return Vue.$http.get(api)
+  return Vue.$http.get(url)
+    .then(res => res.data)
     .then(res => {
       commit && commit(Type.FINISH_LOADING)
       if (res.status === 0) {

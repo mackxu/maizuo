@@ -4,7 +4,7 @@
 
 <template>
 	<div>
-   <p>home</p>
+    <p>home</p>
     <p>comingSoonFilms</p> 
   </div>
 </template>
