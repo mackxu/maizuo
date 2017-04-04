@@ -60,7 +60,7 @@
     },
     methods: {
       hideLeftNav () {
-        this.$store.dispatch('changeLeftNavState', false)
+        this.$store.dispatch('changeLeftNavState')
       }
     }
   }

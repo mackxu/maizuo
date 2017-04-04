@@ -12,8 +12,8 @@ const getters = {
 }
 
 const mutations = {
-  [Type.CHANGE_LEFTNAV_STATE] (state, isShow) {
-    state.leftnavIsShow = isShow
+  [Type.CHANGE_LEFTNAV_STATE] (state) {
+    state.leftnavIsShow = !state.leftnavIsShow
   },
   [Type.START_LOADING] (state) {
     state.isLoading = true

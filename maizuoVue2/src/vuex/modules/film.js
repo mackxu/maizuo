@@ -13,7 +13,7 @@ const _get = ({ api, query }, commit) => {
   }
 
   // 修正url
-  var url = api
+  let url = api
   if (query) {
     url += '?' + query
   }
@@ -51,25 +51,25 @@ const state = {
 
 // getters
 const getters = {
-  comingSoonFilms: state => state.comingSoonFilms,
-  nowPlayingFilms: state => state.nowPlayingFilms,
-  billboards: state => state.billboards,
-  detail: state => state.detail
+  getComingSoonFilms: state => state.comingSoonFilms,
+  getNowPlayingFilms: state => state.nowPlayingFilms,
+  getBillboards: state => state.billboards,
+  getFilmDetail: state => state.detail
 }
 
 // mutations
 const mutations = {
   [Type.FETCH_COMING_SOON_SUCCESS] (state, data) {
-    state.comingSoonFilms = data.films
+    state.comingSoonFilms = data.films || []
   },
   [Type.FETCH_NOW_PLAYING_SUCCESS] (state, data) {
-    state.nowPlayingFilms = data.films
+    state.nowPlayingFilms = data.films || []
   },
   [Type.FETCH_DETAIL_SUCCESS] (state, data) {
-    state.detail = data.film
+    state.detail = data.film || null
   },
   [Type.FETCH_BANNER_SUCCESS] (state, data) {
-    state.billboards = data.billboards
+    state.billboards = data.billboards || []
   }
 }
 

@@ -45,7 +45,7 @@
     name: 'Navbar',
     methods: {
       showLeftNav () {
-        this.$store.dispatch('changeLeftNavState', true)
+        this.$store.dispatch('changeLeftNavState')
       }
     }
   }
