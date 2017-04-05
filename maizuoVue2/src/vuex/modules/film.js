@@ -62,6 +62,9 @@ const mutations = {
   [Type.FETCH_COMING_SOON_SUCCESS] (state, data) {
     state.comingSoonFilms = data.films || []
   },
+  [Type.FETCH_COMING_SOON_FAIL] (state, data) {
+    state.comingSoonFilms = data.films || []
+  },
   [Type.FETCH_NOW_PLAYING_SUCCESS] (state, data) {
     state.nowPlayingFilms = data.films || []
   },
@@ -127,6 +130,10 @@ const actions = {
 
     return _get({ api, query }, commit)
       .then(res => commit(Type.FETCH_BANNER_SUCCESS, res))
+      .catch(err => {
+        commit(Type.FETCH_COMING_SOON_FAIL)
+        return Promise.reject(err)
+      })
   }
 }
 

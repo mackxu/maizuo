@@ -1,7 +1,7 @@
 <style lang="css" scoped>
   .mySwiper {
     height: 3.6rem;
-    color: #ffffff;
+    color: #fff;
     font-size: 30px;
     text-align: center;
     overflow: hidden;
@@ -24,14 +24,14 @@
 <template>
   <section class="container">
     <swiper class="mySwiper" :options="swiperOptions">
-      <swiper-slide class="swiper" v-for="bb in billboards">
+      <swiper-slide class="swiper" v-for="bb in billboards" :key="bb.id">
         <a :href="bb.url" class="swiper-cover-wrapper">
           <img :src="bb.imageUrl" alt="" />
         </a>
       </swiper-slide>
     </swiper>
-    <now-playing :films="nowPlayingFilms" v-if="nowPlayingFilms"></now-playing>
-    <coming-soon :films="comingSoonFilms" v-if="comingSoonFilms"></coming-soon>
+    <now-playing :films="nowPlayingFilms" v-if="nowPlayingFilms && nowPlayingFilms.length"></now-playing>
+    <coming-soon :films="comingSoonFilms" v-if="comingSoonFilms && comingSoonFilms.length"></coming-soon>
   </section>
 </template>
 
