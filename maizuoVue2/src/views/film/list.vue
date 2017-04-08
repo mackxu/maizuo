@@ -17,7 +17,7 @@
     line-height: 0.92rem;
     color: #6a6a6a;
   }
-  .v-link-active {
+  .router-link-active {
     border-bottom: 2px solid currentColor;
     color: #fe6e00;
   }
@@ -26,8 +26,8 @@
 <template>
   <section class="film-list-wrap">
     <div class="list-nav clearfix">
-      <router-link to="{ path: 'film/now_playing', replace: true }" class="v-link">正在热播</router-link>
-      <router-link to="{ path: 'film/coming_soon', replace: true }" class="v-link">即将上映</router-link>
+      <router-link :to="{ path: '/films/now_playing', replace: true }" class="v-link">正在热播</router-link>
+      <router-link :to="{ path: '/films/coming_soon', replace: true }" class="v-link">即将上映</router-link>
     </div>
     <ul class="film-list" v-if="getFilms">
       <list-item v-for="film in getFilms" :film="film" :key="film.id"></list-item>
@@ -39,6 +39,7 @@
 
   // film type:
   const NOW_PLAYING = 'now_playing'
+//  const COMING_SOON = 'coming_soon'
 
   import { mapGetters } from 'vuex'
   import ListItem from './list-item.vue'
@@ -46,19 +47,11 @@
   export default {
 
     name: 'FilmList',
-
-    data () {
-      return {
-        filmType: NOW_PLAYING
-      }
-    },
     created () {
-      this.filmType = this.$route.params.type || NOW_PLAYING
-      if (this.filmType === NOW_PLAYING) {
-        this.$store.dispatch('fetchComingSoonLists', { pageN: 1, count: 10 })
-      } else {
-        this.$store.dispatch('fetchNowPlayingLists', { pageN: 1, count: 10 })
-      }
+      this.dispatchAction()
+    },
+    watch: {
+      '$route': 'dispatchAction'
     },
     computed: {
       ...mapGetters({
@@ -66,7 +59,19 @@
         comingSoonFilms: 'getComingSoonFilms'
       }),
       getFilms () {
-        return this.filmType === NOW_PLAYING ? this.nowPlayingFilms : this.comingSoonFilms
+        return this.getFilmType === NOW_PLAYING ? this.nowPlayingFilms : this.comingSoonFilms
+      },
+      getFilmType () {
+        return this.$route.params.type || NOW_PLAYING
+      }
+    },
+    methods: {
+      dispatchAction () {
+        if (this.getFilmType === NOW_PLAYING) {
+          this.$store.dispatch('fetchNowPlayingLists', { pageN: 1, count: 10 })
+        } else {
+          this.$store.dispatch('fetchComingSoonLists', { pageN: 1, count: 10 })
+        }
       }
     },
     components: {

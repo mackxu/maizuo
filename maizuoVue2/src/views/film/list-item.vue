@@ -23,7 +23,7 @@
 
 <template>
   <li class="movie-item-wrap">
-    <router-link to="{path: '/film/' + film.id }" class="movie-item clearfix">
+    <router-link :to="{ path: '/film/' + film.id }" class="movie-item clearfix">
       <div class="movie-cover">
         <img :src="film.poster.thumbnail" :alt="film.name" class="img-responsive">
       </div>
@@ -50,7 +50,7 @@
 
   export default {
     name: 'ListItem',
-    parmas: {
+    props: {
       film: {
         type: Object,
         required: true

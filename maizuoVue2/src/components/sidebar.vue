@@ -46,7 +46,7 @@
       return {
         menuList: [
           { name: '首页', path: '/' },
-          { name: '影片', path: '/film/now_playing' },
+          { name: '影片', path: '/films/now_playing' },
           { name: '影院', path: '/cinema' },
           { name: '我的', path: '/member' },
           { name: '卖座卡查询', path: '/' }
@@ -65,4 +65,3 @@
     }
   }
 </script>
-

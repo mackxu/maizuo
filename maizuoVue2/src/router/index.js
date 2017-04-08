@@ -24,7 +24,7 @@ export default new Router({
       component: FilmDetail
     },
     {
-      path: '/film/:type',
+      path: '/films/:type',
       name: 'filmList',
       component: FilmList
     },
